@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" description="Edan Luis de Almeida">
+  <title>Calculadora</title>
+  <link href="https://fonts.googleapis.com/css?family=Revalia|Offside|Wallpoet" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <style>
+    body {
+      background-color: #fff;
+    }
+    
+    .noselect {
+      user-select: none;
+    }
+    
+    .flex-container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+    }
+    
+    .calculator {
+      background-color: rgb(0, 0, 0);
+      border-radius: 10px;
+      justify-content: stretch;
+      align-items: center;
+      align-content: center;
+      height: 27rem;
+      padding: 2rem;
+      margin: 5rem;
+    }
+    
+    .display {
+      text-align: right;
+      width: 100%;
+    }
+    
+    .result {
+      background-color: MintCream;
+      border-right: 2px inset Gainsboro;
+      border-bottom: 2px inset Gainsboro;
+      border-left: 2px inset Gainsboro;
+      border-top: 2px inset Gainsboro;
+      color: Black;
+      font-size: 1.75rem;
+      font-weight: bold;
+      font-family: "Revalia", cursive;
+      height: 3.5rem;
+      line-height: 3.5rem;
+      margin: 5px;
+      padding: 0 0.5rem;
+      text-align: right;
+    }
+    .result span {
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+    }
+    
+    .equation {
+      background-color: MintCream;
+      border-right: 2px inset Gainsboro;
+      border-bottom: 2px inset Gainsboro;
+      border-left: 2px inset Gainsboro;
+      border-top: 2px inset Gainsboro;
+      color: Black;
+      font-family: "Offside", cursive;
+      height: 2rem;
+      line-height: 2rem;
+      margin: 5px;
+      padding: 0 1rem;
+    }
+    .equation span {
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+    }
+    
+    .buttons {
+      font-family: "Wallpoet", cursive;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .button-row {
+      display: flex;
+      justify-content: space-around;
+      padding: 5px;
+      min-height: 2.5rem;
+    }
+    
+    .button {
+      border-top: 1px groove Gainsboro;
+      border-right: 1px groove Gainsboro;
+      border-bottom: 1px groove Gainsboro;
+      border-left: 1px groove Gainsboro;
+      border-radius: 5px;
+      min-height: 2.5rem;
+      min-width: 2.5rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+    .button span {
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+    }
+    .button:active {
+      transform: translateY(1px);
+    }
+    
+    .clear-button {
+      background-color: Crimson;
+    }
+    
+    .memory-button {
+      background-color: RoyalBlue;
+    }
+    
+    .function-button {
+      background-color: rgb(138, 137, 137);
+    }
+    
+    .numeric-button {
+      background-color: WhiteSmoke;
+      color: DimGrey;
+    }
+    
+    #equals {
+      background-color: Crimson;
+      color: white;
+      min-width: 5.5rem;
+    }
+    
+    #clear-all {
+      color: white;
+      min-width: 7rem;
+    }
+    
+    #clear-last {
+      color: white;
+      min-width: 7rem;
+    }
+    
+  </style>
+
+</head>
+
+<body>
+  <div class='flex-container noselect'>
+    <div class='calculator'>
+      <div class='display'>
+        <div class='result' id="result-text">
+        </div>
+        <div class='equation' id="equation-text">
+        </div>
+      </div>
+      <div class='buttons'>
+        <div class='button-row'>
+          <div class='button clear-button' id='clear-all'>
+            <span>CA</span>
+          </div>
+          <div class='button clear-button' id='clear-last'>
+            <span>C</span>
+          </div>
+        </div>
+        <div class='button-row'>
+          <div class='button memory-button'>
+            <span>M+</span>
+          </div>
+          <div class='button memory-button'>
+            <span>M-</span>
+          </div>
+          <div class='button memory-button'>
+            <span>MR</span>
+          </div>
+          <div class='button memory-button'>
+            <span>MC</span>
+          </div>
+          <div class='button function-button'>
+            <span>&divide;</span>
+          </div>
+        </div>
+        <div class='button-row'>
+          <div class='button function-button'>
+            <span>+/-</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>7</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>8</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>9</span>
+          </div>
+          <div class='button function-button'>
+            <span>&times;</span>
+          </div>
+        </div>
+        <div class='button-row'>
+          <div class='button function-button'>
+            <span>&radic;<span style="text-decoration: overline"> </span></span>
+          </div>
+          <div class='button numeric-button'>
+            <span>4</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>5</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>6</span>
+          </div>
+          <div class='button function-button'>
+            <span>&plus;</span>
+          </div>
+        </div>
+        <div class='button-row'>
+          <div class='button function-button'>
+            <span>x<sup>y</sup></span>
+          </div>
+          <div class='button numeric-button'>
+            <span>1</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>2</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>3</span>
+          </div>
+          <div class='button function-button'>
+            <span>&minus;</span>
+          </div>
+        </div>
+        <div class='button-row'>
+          <div class='button function-button'>
+            <span>%</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>0</span>
+          </div>
+          <div class='button numeric-button'>
+            <span>.</span>
+          </div>
+          <div class='button function-button' id='equals'>
+            <span>=</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Professor, fiz o projeto usando como base uma calculadora construída no curso que estou fazendo da Udemy -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+  <link rel="stylesheet" href="https://www.udemy.com/course/javascript-do-basico-ao-avancado-com-node-e-projetos/learn/lecture/34203420#overview">
+  <!--Nome: JavaScript do básico ao avançado (c/ Node.js e projetos)-->
+  <!--Instrutor; Matheus Battisti.-->
+  <!--Obs: Só fiz algumas adaptações.-->
+  
+  <script>
+    // Máximo de caracteres a ser exibido
+const MAX_RESULT_LENGTH = 8;
+// Número positivo máximo a ser exibido que depende de MAX_RESULT_LENGTH
+const MAX_NUMBER = 9999999;
+// Número máximo de casas decimais para exibir para exponencial
+const MAX_RESULT_EXP_DEC = 3;
+// Maximum length of characters a ser exibido
+const MAX_EQUATION_LENGTH = 20;
+// Objeto para valor de memória e funções disponíveis
+var mValue = {
+  // Guarda o valor na memória
+  _mValue: 0,
+  // Aumenta a memória usando a quantidade fornecida
+  addToMValue: (val) => {
+    if (val) {
+      this._mValue = this._mValue ? this._mValue + parseFloat(val) : 0 + parseFloat(val);
+    }
+  },
+  // Diminui a memória usando a quantidade fornecida
+  subtractFromMValue: (val) => {
+    if (val) {
+      this._mValue = this._mValue ? this._mValue - val : 0 - val;
+    }
+  },
+  // Retorna o valor de memória armazenado ou zero
+  getMValue: () => {
+    return this._mValue ? this._mValue : 0;
+  },
+  // Limpa o valor mantido na memória
+  clearMValue: () => {
+    this._mValue = 0;
+  }
+};
+// Objeto para resultado e funções disponíveis
+var result = {
+  // Armazenar valor do resultado
+  _result: '',
+  // Calcula o valor armazenado
+  _isCalc: false,
+  // Retorna o valor do resultado armazenado ou uma string vazia
+  getResult: () => {
+    return this._result ? this._result : '';
+  },
+  // Retorna o resultado ou falso
+  getIsCalc: () => {
+    return this._isCalc ? this._isCalc : false;
+  },
+  // Seta o resultado com o valor fornecido
+  setResult: (val) => {
+    this._result = val;
+  },
+
+  setIsCalc: (val) => {
+    this._isCalc = val;
+  }
+};
+// Objeto para equação e funções disponíveis
+var equation = {
+  // Armazena o valor da equação
+  _equation: '',
+  // Retorna o valor armazenado da equação ou uma string vazia
+  getEquation: () => {
+    return this._equation ? this._equation : '';
+  },
+  // Retorna o tamanho da string da equação ou zero
+  getLength: () => {
+    return this._equation ? this._equation.length : 0;
+  },
+  // Seta a equação com o valor fornecido
+  setEquation: (val) => {
+    this._equation = val;
+  }
+};
+// Objeto que retorna a função de operador necessária para realizar o cálculo
+var operators = {
+  // Divisão
+  '&divide;': (a, b) => {
+    return parseFloat(a) / parseFloat(b);
+  },
+  // Multiplicação
+  '&times;': (a, b) => {
+    return parseFloat(a) * parseFloat(b);
+  },
+  // Adição
+  '&plus;': (a, b) => {
+    return parseFloat(a) + parseFloat(b);
+  },
+  // Subtração
+  '&minus;': (a, b) => {
+    return parseFloat(a) - parseFloat(b);
+  },
+  // Porcentagem
+  '%': (a, b) => {
+    return parseFloat(a) / parseFloat(b) * 100;
+  },
+  // Exponenciação
+  '^': (a, b) => {
+    return Math.pow(a, b);
+  }
+};
+// String para mostrar o resultado
+function updateResult() {
+  // testa se o resultado cabe na tela
+  if (result.getResult().length > MAX_RESULT_LENGTH) {
+    // testa se o resultado contém um valor decimal
+    var decimalIndex = result.getResult().toString().indexOf('.');
+    if (decimalIndex > 0) {
+      // Se ponto flutuante truncado
+      result.setResult(parseFloat(result.getResult()).toFixed(MAX_RESULT_LENGTH - decimalIndex));
+    } 
+  }
+  // Exibe o resultado (exponencial, se necessário).
+  $('#result-text').html(function() {
+    return "<span>" + (result.getResult().toString().length > MAX_RESULT_LENGTH ? Number(result.getResult()).toExponential(MAX_RESULT_EXP_DEC) : result.getResult()) + "</span>";
+  });
+}
+// String para mostrar o resultado da equação
+function updateEquation() {
+  // Conta caracteres após converter nomes de entidades html.
+  var eqString = $("<span>" + equation.getEquation() + "</span>").text();
+  var eqLength = eqString.length;
+  // Exibe a equação após o adaptação, se necessário
+  $('#equation-text').html(function() {
+    return "<span>" + (eqLength > MAX_EQUATION_LENGTH ? eqString.substring(eqLength - MAX_EQUATION_LENGTH) : eqString) + "</span>";
+  });
+}
+// Calcula o total de 2 parâmetros usando o terceiro como o tipo de operador.
+function calculate(lOperand, operator, rOperand) {
+  var total = 0;
+  total = (operators[operator](lOperand, rOperand));
+  return total;
+}
+// Calcula a matriz de equações da esquerda para a direita
+function equate(eq) {
+  var equat = [];
+  // Percorre o array calculando os 3 primeiros argumentos e retorna o resultado para o início do array
+  while (eq.length >= 3) {
+    equat[0] = (calculate(eq[0], eq[1], eq[2]));
+    eq = equat.concat(eq.slice(3, eq.length));
+  }
+  return eq;
+}
+// Retorna o resultado do parâmetro de processamento da string como uma matriz de equações matemáticas.
+function processEquation(eq) {
+  // Crie um array de operandos e operadores de string
+  var eqArray = eq.replace(/\^/g, ',^,').replace(/%/g, ',%,').replace(/&/g, ',&').replace(/;/g, ';,').split(/,/g);
+  // Passa o array para função para o resultado da equação
+  result.setResult(equate(eqArray));
+  // Limpa a equação para limpar o display
+  return result.getResult();
+}
+// Remove a string que representa um operador da equação se for a primeira ou a última entrada
+function trimOperator() {
+  var operator;
+if (equation.getLength() > 0) {
+  if (equation.getEquation()[0] == '&') {
+    operator = equation.getEquation().indexOf(';');
+  } else if (equation.getEquation()[0] == '^') {
+    operator = equation.getEquation().indexOf('^');
+  } else if (equation.getEquation()[0] == '%') {
+    operator = equation.getEquation().indexOf('%');
+  }
+  equation.setEquation(equation.getEquation().substring(operator != -1 ? operator + 1 : 0));
+  if ((equation.getEquation()[equation.getLength() - 1]) == ';') {
+    operator = equation.getEquation().lastIndexOf('&');
+  } else if ((equation.getEquation()[equation.getLength() - 1]) == '^') {
+    operator = equation.getEquation().indexOf('^');
+  } else if ((equation.getEquation()[equation.getLength() - 1]) == '%') {
+    operator = equation.getEquation().indexOf('%');
+  }
+  equation.setEquation(equation.getEquation().substring(0, operator != -1 ? operator : equation.getLength()));
+  }
+}
+// Processa os dados de entrada da interface e do teclado
+function processInput(data) {
+  // Verifica se os dados são válidos
+  if (data !== undefined && equation) {
+    // Detecta o tipo do dado e processa
+    switch (data) {
+      // calcula a equação
+      case '=':
+        {
+          // Escape se a última operação foi um cálculo
+          if (result.getIsCalc()) break;
+          // Adiciona o resultado atual à equação
+          equation.setEquation(equation.getEquation() + '' + result.getResult());
+          // Remove os operadores de ambas as extremidades da equação
+          trimOperator();
+          // Calcula e seta o valor do resultado
+          result.setResult(processEquation(equation.getEquation()));
+          result.setIsCalc(true);
+          break;
+        }
+        // Calcula e mostra a raiz quadrada
+      case '√':
+        {
+          // Calcula o resultado se ele existir e não for negativo, caso contrário limpa o resultado e a equação
+          if (Math.sqrt(result.getResult()) && result.getResult() > 0) {
+            equation.setEquation('√' + parseFloat(result.getResult()));
+            result.setResult(Math.sqrt(result.getResult()));
+          } else {
+            result.setResult('');
+            equation.setEquation('');
+          }
+          result.setIsCalc(true);
+          break;
+        }
+        // Adiciona o valor à memória
+      case 'M+':
+        {
+          // Adiciona o resultado a memória
+          mValue.addToMValue(result.getResult());
+          // Seta o reultado calculado e limpa a equação
+          result.setResult(mValue.getMValue());
+          equation.setEquation('');
+          result.setIsCalc(true);
+          break;
+        }
+        // Subtrai o valor da memória
+      case 'M-':
+        {
+          // Subtrai o resultado a memória
+          mValue.subtractFromMValue(result.getResult());
+          // Seta o reultado calculado e limpa a equação
+          result.setResult(mValue.getMValue());
+          equation.setEquation('');
+          result.setIsCalc(true);
+          break;
+        }
+      case 'MR':
+        {
+          // Define o resultado para o valor de memória armazenado
+          result.setResult(mValue.getMValue());
+          result.setIsCalc(true);
+          break;
+        }
+      case 'MC':
+        {
+          // Limpa o valor armazenado na memória
+          mValue.clearMValue();
+          result.setIsCalc(true);
+          break;
+        }
+        // Limpa tudo.
+      case 'CA':
+        {
+          // Seta o resultado para uma string vazia
+          result.setResult(0);
+          // Seta equação para um array vazio
+          equation.setEquation([]);
+          result.setIsCalc(false);
+          break;
+        }
+        // Limpa o último operando e operador
+      case 'C':
+        {
+          // Limpa o resultado
+          result.setResult("");
+          // Limpa a equação para operandos
+          var expIndex = equation.getEquation().lastIndexOf('^');
+          var opIndex = equation.getEquation().lastIndexOf('&');
+          // Armazena o índice do último encontrado
+          var index = expIndex > opIndex ? expIndex : opIndex;
+          if (index > 0) {
+            equation.setEquation(equation.getEquation().substring(0, index != -1 ? index : equation.getLength()));
+          } else {
+            equation.setEquation('');
+          }
+          result.setIsCalc(false);
+          break;
+        }
+        // Adiciona o operador para a equação e limpa o resultado
+      case '^':
+      case '%':
+      case '&divide;':
+      case '&times;':
+      case '&plus;':
+      case '&minus;':
+        {
+          if (result.getIsCalc()) {
+            equation.setEquation('');
+          }
+          result.setIsCalc(false);
+          // Testa se o operador é a última entrada e atualiza
+          // Adicina o resultado a equação
+          equation.setEquation(equation.getEquation() + '' + parseFloat(result.getResult()));
+          // Testa se o operador é a última entrada e atualiza
+          trimOperator();
+          equation.setEquation(equation.getEquation() + data);
+          // Limpa o resultado.
+          result.setResult("");
+          break;
+        }
+        // Adiciona numerais as variáveis
+      case (data.match(/^\d/) || {}).input:
+        {
+          // Limpa o display de resultado e de equação se já efetuou o cálculo.
+          if (result.getIsCalc()) {
+            result.setResult('');
+            equation.setEquation('');
+          }
+          // Não permitir estouro de notação científica para decimal
+          result.setResult(result.getResult() + data);
+          result.setIsCalc(false);
+          break;
+        }
+        // Adiciona '.' para as varáveis
+      case '.':
+        {
+          result.setIsCalc(false);
+          // Somente adiciona '.' se não houver um
+          if (result.getResult().indexOf('.') < 0) {
+            result.setResult(result.getResult() + data);
+          }
+          break;
+        }
+        // Torna o número negativo
+      case '-':
+        {
+          if (Math.sign(result.getResult()) > 0) {
+            result.setResult(data + result.getResult());
+          } else {
+            result.setResult(Math.abs(result.getResult()));
+          }
+          break;
+        }
+    }
+    // Exibe os dados atuais que estão armazenados em variáveis
+    updateResult();
+    updateEquation();
+  }
+}
+// Registra o botão e processa o input
+$('.button').on('click', function(e) {
+  var buttonText;
+  switch (e.target.outerText) {
+      // Divisão.
+    case '÷':
+      {
+        buttonText = '&divide;';
+        break;
+      }
+      // Multiplicação.
+    case '×':
+      {
+        buttonText = '&times;';
+        break;
+      }
+      // Adição.
+    case '+':
+      {
+        buttonText = '&plus;';
+        break;
+      }
+      // Subtração.
+    case '−':
+      {
+        buttonText = '&minus;';
+        break;
+      }
+      // Captura o clique de y
+    case 'y':
+      // Exponenciação
+    case 'xy':
+      {
+        buttonText = '^';
+        break;
+      }
+      // Alterna sinal
+    case '+/-':
+      {
+        buttonText = '-';
+        break;
+      }
+      // Outros botões
+    default:
+      {
+        buttonText = e.target.outerText;
+      }
+  }
+  processInput(buttonText);
+});
+// Detecta a tecla pressionada e processa
+$(document).on("keyup", function(e) {
+  // Armazena o dado da tecla pressionada, padrão para teclas indefinidas
+  var keyPressed;
+  switch (e.key) {
+      // Limpa o resultado e a equação
+    case 'Delete':
+      {
+        keyPressed = 'CA';
+        break;
+      }
+      // Limpa o resultado e o último operando e operador da equação
+    case 'Backspace':
+      {
+        keyPressed = 'C';
+        break;
+      }
+      // Multiplicação
+    case '*':
+      {
+        keyPressed = '&times;';
+        break;
+      }
+      // Divisão
+    case '/':
+      {
+        keyPressed = '&divide;';
+        break;
+      }
+      // Adição
+    case '+':
+      {
+        keyPressed = '&plus;';
+        break;
+      }
+      // Subtração
+    case '-':
+      {
+        keyPressed = '&minus;';
+        break;
+      }
+      // Porcentagem
+    case '%':
+      {
+        keyPressed = e.key;
+        break;
+      }
+      // Exponenciação
+    case '^':
+      {
+        keyPressed = e.key;
+        break;
+      }
+      // Somente números  
+    case (e.key.match(/^\d/) || {}).input:
+      {
+        keyPressed = e.key;
+        break;
+      }
+      // Casa decimal
+    case '.':
+      {
+        keyPressed = e.key;
+        break;
+      }
+      // Cálculo
+    case 'Enter':
+      {
+        keyPressed = '=';
+        break;
+      }
+  }
+  // Se a tecla pressionada for uma mensagem de log indefinida, caso contrário, processe a entrada
+  if (keyPressed !== undefined) { 
+    processInput(keyPressed);
+  } else {
+    // Entrada de log para solucionar problemas de dados incorretos
+    console.log('unknown input key = '+keyPressed);
+  }
+});
+  </script>
+
+</body>
+
+</html>
